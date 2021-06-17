@@ -24,25 +24,29 @@ public class EnrollCtrl {
             checkForDuplicateEnrollRequest(courses, o);
             checkForConflictingExamTimes(courses, o);
         }
-		int unitsRequested = 0;
-		for (CSE o : courses)
-			unitsRequested += o.getCourse().getUnits();
-		double points = 0;
-		int totalUnits = 0;
+        checkForGPALimit(courses, transcript);
+        for (CSE o : courses)
+			s.takeCourse(o.getCourse(), o.getSection());
+	}
+
+    private void checkForGPALimit(List<CSE> courses, Map<Term, Map<Course, Double>> transcript) throws EnrollmentRulesViolationException {
+        int unitsRequested = 0;
+        for (CSE o : courses)
+            unitsRequested += o.getCourse().getUnits();
+        double points = 0;
+        int totalUnits = 0;
         for (Map.Entry<Term, Map<Course, Double>> tr : transcript.entrySet()) {
             for (Map.Entry<Course, Double> r : tr.getValue().entrySet()) {
                 points += r.getValue() * r.getKey().getUnits();
                 totalUnits += r.getKey().getUnits();
             }
 		}
-		double gpa = points / totalUnits;
-		if ((gpa < 12 && unitsRequested > 14) ||
-				(gpa < 16 && unitsRequested > 16) ||
-				(unitsRequested > 20))
-			throw new EnrollmentRulesViolationException(String.format("Number of units (%d) requested does not match GPA of %f", unitsRequested, gpa));
-		for (CSE o : courses)
-			s.takeCourse(o.getCourse(), o.getSection());
-	}
+        double gpa = points / totalUnits;
+        if ((gpa < 12 && unitsRequested > 14) ||
+                (gpa < 16 && unitsRequested > 16) ||
+                (unitsRequested > 20))
+            throw new EnrollmentRulesViolationException(String.format("Number of units (%d) requested does not match GPA of %f", unitsRequested, gpa));
+    }
 
     private void checkForDuplicateEnrollRequest(List<CSE> courses, CSE o) throws EnrollmentRulesViolationException {
         for (CSE o2 : courses) {
@@ -61,7 +65,6 @@ public class EnrollCtrl {
                 throw new EnrollmentRulesViolationException(String.format("%s is requested to be taken twice", o.getCourse().getName()));
         }
     }
-
 
     private void checkForAlreadyPassedCourses(Map<Term, Map<Course, Double>> transcript, CSE o) throws EnrollmentRulesViolationException {
         for (Map.Entry<Term, Map<Course, Double>> tr : transcript.entrySet()) {

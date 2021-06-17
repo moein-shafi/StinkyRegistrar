@@ -5,11 +5,11 @@ import java.util.List;
 import domain.exceptions.EnrollmentRulesViolationException;
 
 public class EnrollmentControl {
-    private final int MAXIMUM_ALLOWED_UNITS_FOR_PROBATION_STUDENTS = 14;
-    private final int MAXIMUM_GPA_OF_PROBATION_STUDENTS = 12;
-    private final int MAXIMUM_ALLOWED_UNITS_FOR_ORDINARY_STUDENTS = 16;
-    private final int MAXIMUM_GPA_OF_ORDINARY_STUDENTS = 16;
-    private final int MAXIMUM_ALLOWED_UNITS = 20;
+    static private final int MAXIMUM_ALLOWED_UNITS_FOR_PROBATION_STUDENTS = 14;
+    static private final int MAXIMUM_GPA_OF_PROBATION_STUDENTS = 12;
+    static private final int MAXIMUM_ALLOWED_UNITS_FOR_ORDINARY_STUDENTS = 16;
+    static private final int MAXIMUM_GPA_OF_ORDINARY_STUDENTS = 16;
+    static private final int MAXIMUM_ALLOWED_UNITS = 20;
 
 	public void enroll(Student student, List<CSE> offerings) throws EnrollmentRulesViolationException {
         checkForAlreadyPassedCourses(student, offerings);

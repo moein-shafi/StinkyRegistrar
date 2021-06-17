@@ -21,15 +21,9 @@ public class EnrollCtrl {
 				}
 				throw new EnrollmentRulesViolationException(String.format("The student has not passed %s as a prerequisite of %s", pre.getName(), o.getCourse().getName()));
 			}
-            for (CSE o2 : courses) {
-                if (o == o2)
-                    continue;
-                if (o.getExamTime().equals(o2.getExamTime()))
-                    throw new EnrollmentRulesViolationException(String.format("Two offerings %s and %s have the same exam time", o, o2));
-                if (o.getCourse().equals(o2.getCourse()))
-                    throw new EnrollmentRulesViolationException(String.format("%s is requested to be taken twice", o.getCourse().getName()));
-            }
-		}
+            checkForDuplicateEnrollRequest(courses, o);
+            checkForConflictingExamTimes(courses, o);
+        }
 		int unitsRequested = 0;
 		for (CSE o : courses)
 			unitsRequested += o.getCourse().getUnits();
@@ -49,6 +43,25 @@ public class EnrollCtrl {
 		for (CSE o : courses)
 			s.takeCourse(o.getCourse(), o.getSection());
 	}
+
+    private void checkForDuplicateEnrollRequest(List<CSE> courses, CSE o) throws EnrollmentRulesViolationException {
+        for (CSE o2 : courses) {
+            if (o == o2)
+                continue;
+            if (o.getExamTime().equals(o2.getExamTime()))
+                throw new EnrollmentRulesViolationException(String.format("Two offerings %s and %s have the same exam time", o, o2));
+        }
+    }
+
+    private void checkForConflictingExamTimes(List<CSE> courses, CSE o) throws EnrollmentRulesViolationException {
+        for (CSE o2 : courses) {
+            if (o == o2)
+                continue;
+            if (o.getCourse().equals(o2.getCourse()))
+                throw new EnrollmentRulesViolationException(String.format("%s is requested to be taken twice", o.getCourse().getName()));
+        }
+    }
+
 
     private void checkForAlreadyPassedCourses(Map<Term, Map<Course, Double>> transcript, CSE o) throws EnrollmentRulesViolationException {
         for (Map.Entry<Term, Map<Course, Double>> tr : transcript.entrySet()) {

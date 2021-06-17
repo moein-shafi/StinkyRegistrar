@@ -51,7 +51,7 @@ public class EnrollCtrl {
             for (CSE o2 : offerings) {
                 if (o == o2)
                     continue;
-                if (o.getExamTime().equals(o2.getExamTime()))
+                if (o.hasExamTimeConflict(o2.getExamTime()))
                     throw new EnrollmentRulesViolationException(String.format("Two offerings %s and %s have the same exam time", o, o2));
             }
         }

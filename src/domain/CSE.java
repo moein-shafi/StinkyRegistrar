@@ -37,4 +37,10 @@ public class CSE {
 	}
 
 	public int getSection() { return section; }
+
+	public boolean hasExamTimeConflict(Date date) {
+		if (examDate.equals(date))
+			return true;
+		return false;
+	}
 }

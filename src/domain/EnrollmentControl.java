@@ -21,22 +21,29 @@ public class EnrollmentControl {
             student.takeCourse(offering.getCourse(), offering.getSection());
     }
 
-    private void checkForPrerequisiteRequirements(Student student, List<CSE> offerings) throws EnrollmentRulesViolationException {
+    private void checkForPrerequisiteRequirements(Student student, List<CSE> offerings)
+            throws EnrollmentRulesViolationException {
         for (CSE offering : offerings) {
             List<Course> prerequisites = offering.getCourse().getPrerequisites();
             for (Course prerequisite : prerequisites) {
                 if (!student.hasPassed(prerequisite))
-                    throw new EnrollmentRulesViolationException(String.format("The student has not passed %s as a prerequisite of %s", prerequisite.getName(), offering.getCourse().getName()));
+                    throw new EnrollmentRulesViolationException(
+                            String.format("The student has not passed %s as a prerequisite of %s",
+                                    prerequisite.getName(),offering.getCourse().getName()));
             }
         }
     }
 
     private void checkForGPALimit(Student student, List<CSE> offerings) throws EnrollmentRulesViolationException {
         int unitsRequested = offerings.stream().mapToInt(offering -> offering.getCourse().getUnits()).sum();
-        if ((student.getGpa() < MAXIMUM_GPA_OF_PROBATION_STUDENTS && unitsRequested > MAXIMUM_ALLOWED_UNITS_FOR_PROBATION_STUDENTS) ||
-                (student.getGpa() < MAXIMUM_GPA_OF_ORDINARY_STUDENTS && unitsRequested > MAXIMUM_ALLOWED_UNITS_FOR_ORDINARY_STUDENTS) ||
+        if ((student.getGpa() < MAXIMUM_GPA_OF_PROBATION_STUDENTS &&
+                        unitsRequested > MAXIMUM_ALLOWED_UNITS_FOR_PROBATION_STUDENTS) ||
+                (student.getGpa() < MAXIMUM_GPA_OF_ORDINARY_STUDENTS &&
+                        unitsRequested > MAXIMUM_ALLOWED_UNITS_FOR_ORDINARY_STUDENTS) ||
                 (unitsRequested > MAXIMUM_ALLOWED_UNITS))
-            throw new EnrollmentRulesViolationException(String.format("Number of units (%d) requested does not match GPA of %f", unitsRequested, student.getGpa()));
+            throw new EnrollmentRulesViolationException(
+                    String.format("Number of units (%d) requested does not match GPA of %f",
+                            unitsRequested, student.getGpa()));
     }
 
     private void checkForDuplicateEnrollRequest(List<CSE> offerings) throws EnrollmentRulesViolationException {
@@ -45,7 +52,9 @@ public class EnrollmentControl {
                 if (firstOffering == secondOffering)
                     continue;
                 if (firstOffering.hasExamTimeConflict(secondOffering.getExamTime()))
-                    throw new EnrollmentRulesViolationException(String.format("Two offerings %s and %s have the same exam time", firstOffering, secondOffering));
+                    throw new EnrollmentRulesViolationException(
+                            String.format("Two offerings %s and %s have the same exam time",
+                                    firstOffering, secondOffering));
             }
         }
     }
@@ -56,15 +65,18 @@ public class EnrollmentControl {
                 if (firstOffering == secondOffering)
                     continue;
                 if (firstOffering.getCourse().equals(secondOffering.getCourse()))
-                    throw new EnrollmentRulesViolationException(String.format("%s is requested to be taken twice", firstOffering.getCourse().getName()));
+                    throw new EnrollmentRulesViolationException(
+                            String.format("%s is requested to be taken twice", firstOffering.getCourse().getName()));
             }
         }
     }
 
-    private void checkForAlreadyPassedCourses(Student student, List<CSE> offerings) throws EnrollmentRulesViolationException {
+    private void checkForAlreadyPassedCourses(Student student, List<CSE> offerings)
+            throws EnrollmentRulesViolationException {
         for (CSE offering : offerings) {
             if (student.hasPassed(offering.getCourse()))
-                throw new EnrollmentRulesViolationException(String.format("The student has already passed %s", offering.getCourse().getName()));
+                throw new EnrollmentRulesViolationException(
+                        String.format("The student has already passed %s", offering.getCourse().getName()));
         }
     }
 }

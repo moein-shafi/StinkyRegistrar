@@ -55,4 +55,15 @@ public class Student {
 	public String toString() {
 		return name;
 	}
+
+	public boolean hasPassed(Course course)
+	{
+		for (Map<Course, Double> courses : transcript.values()) {
+			if (courses.containsKey(course)) {
+				if (courses.get(course) >= 10)
+					return true;
+			}
+		}
+		return false;
+	}
 }

@@ -17,18 +17,11 @@ public class EnrollCtrl {
     }
 
     private void checkForPrerequisiteRequirements(Student s, List<CSE> offerings) throws EnrollmentRulesViolationException {
-        Map<Term, Map<Course, Double>> transcript = s.getTranscript();
-        for (CSE o : offerings) {
-            List<Course> prereqs = o.getCourse().getPrerequisites();
-            nextPre:
+        for (CSE offering : offerings) {
+            List<Course> prereqs = offering.getCourse().getPrerequisites();
             for (Course pre : prereqs) {
-                for (Map.Entry<Term, Map<Course, Double>> tr : transcript.entrySet()) {
-                    for (Map.Entry<Course, Double> r : tr.getValue().entrySet()) {
-                        if (r.getKey().equals(pre) && r.getValue() >= 10)
-                            continue nextPre;
-                    }
-                }
-                throw new EnrollmentRulesViolationException(String.format("The student has not passed %s as a prerequisite of %s", pre.getName(), o.getCourse().getName()));
+                if (!s.hasPassed(pre))
+                    throw new EnrollmentRulesViolationException(String.format("The student has not passed %s as a prerequisite of %s", pre.getName(), offering.getCourse().getName()));
             }
         }
     }

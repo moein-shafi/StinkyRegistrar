@@ -1,11 +1,16 @@
 package domain;
 
 import java.util.List;
-import java.util.Map;
 
 import domain.exceptions.EnrollmentRulesViolationException;
 
 public class EnrollCtrl {
+    private final int MAXIMUM_ALLOWED_UNITS_FOR_PROBATION_STUDENTS = 14;
+    private final int MAXIMUM_GPA_OF_PROBATION_STUDENTS = 12;
+    private final int MAXIMUM_ALLOWED_UNITS_FOR_ORDINARY_STUDENTS = 16;
+    private final int MAXIMUM_GPA_OF_ORDINARY_STUDENTS = 16;
+    private final int MAXIMUM_ALLOWED_UNITS = 20;
+
 	public void enroll(Student s, List<CSE> offerings) throws EnrollmentRulesViolationException {
         checkForAlreadyPassedCourses(s, offerings);
         checkForPrerequisiteRequirements(s, offerings);
@@ -28,9 +33,9 @@ public class EnrollCtrl {
 
     private void checkForGPALimit(Student s, List<CSE> offerings) throws EnrollmentRulesViolationException {
         int unitsRequested = offerings.stream().mapToInt(o -> o.getCourse().getUnits()).sum();
-        if ((s.getGpa() < 12 && unitsRequested > 14) ||
-                (s.getGpa() < 16 && unitsRequested > 16) ||
-                (unitsRequested > 20))
+        if ((s.getGpa() < MAXIMUM_GPA_OF_PROBATION_STUDENTS && unitsRequested > MAXIMUM_ALLOWED_UNITS_FOR_PROBATION_STUDENTS) ||
+                (s.getGpa() < MAXIMUM_GPA_OF_ORDINARY_STUDENTS && unitsRequested > MAXIMUM_ALLOWED_UNITS_FOR_ORDINARY_STUDENTS) ||
+                (unitsRequested > MAXIMUM_ALLOWED_UNITS))
             throw new EnrollmentRulesViolationException(String.format("Number of units (%d) requested does not match GPA of %f", unitsRequested, s.getGpa()));
     }
 

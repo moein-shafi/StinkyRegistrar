@@ -11,16 +11,7 @@ public class EnrollCtrl {
 		for (CSE o : courses) {
             checkForAlreadyPassedCourses(transcript, o);
             List<Course> prereqs = o.getCourse().getPrerequisites();
-			nextPre:
-			for (Course pre : prereqs) {
-                for (Map.Entry<Term, Map<Course, Double>> tr : transcript.entrySet()) {
-                    for (Map.Entry<Course, Double> r : tr.getValue().entrySet()) {
-                        if (r.getKey().equals(pre) && r.getValue() >= 10)
-                            continue nextPre;
-                    }
-				}
-				throw new EnrollmentRulesViolationException(String.format("The student has not passed %s as a prerequisite of %s", pre.getName(), o.getCourse().getName()));
-			}
+            checkForPrerequisiteRequirements(transcript, o, prereqs);
             checkForDuplicateEnrollRequest(courses, o);
             checkForConflictingExamTimes(courses, o);
         }
@@ -28,6 +19,19 @@ public class EnrollCtrl {
         for (CSE o : courses)
 			s.takeCourse(o.getCourse(), o.getSection());
 	}
+
+    private void checkForPrerequisiteRequirements(Map<Term, Map<Course, Double>> transcript, CSE o, List<Course> prereqs) throws EnrollmentRulesViolationException {
+        nextPre:
+        for (Course pre : prereqs) {
+            for (Map.Entry<Term, Map<Course, Double>> tr : transcript.entrySet()) {
+                for (Map.Entry<Course, Double> r : tr.getValue().entrySet()) {
+                    if (r.getKey().equals(pre) && r.getValue() >= 10)
+                        continue nextPre;
+                }
+            }
+            throw new EnrollmentRulesViolationException(String.format("The student has not passed %s as a prerequisite of %s", pre.getName(), o.getCourse().getName()));
+        }
+    }
 
     private void checkForGPALimit(List<CSE> courses, Map<Term, Map<Course, Double>> transcript) throws EnrollmentRulesViolationException {
         int unitsRequested = 0;

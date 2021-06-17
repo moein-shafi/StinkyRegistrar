@@ -69,7 +69,6 @@ public class EnrollCtrl {
     }
 
     private void checkForAlreadyPassedCourses(Student s, List<CSE> offerings) throws EnrollmentRulesViolationException {
-        Map<Term, Map<Course, Double>> transcript = s.getTranscript();
         for (CSE o : offerings) {
             if (s.hasPassed(o.getCourse()))
                 throw new EnrollmentRulesViolationException(String.format("The student has already passed %s", o.getCourse().getName()));

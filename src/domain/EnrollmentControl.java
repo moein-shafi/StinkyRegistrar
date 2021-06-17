@@ -4,7 +4,7 @@ import java.util.List;
 
 import domain.exceptions.EnrollmentRulesViolationException;
 
-public class EnrollCtrl {
+public class EnrollmentControl {
     private final int MAXIMUM_ALLOWED_UNITS_FOR_PROBATION_STUDENTS = 14;
     private final int MAXIMUM_GPA_OF_PROBATION_STUDENTS = 12;
     private final int MAXIMUM_ALLOWED_UNITS_FOR_ORDINARY_STUDENTS = 16;

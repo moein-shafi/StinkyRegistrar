@@ -1,10 +1,12 @@
 package domain;
 
 import java.sql.Date;
+import java.util.List;
 
 public class Term {
 	private String name;
 	private Date startDate;
+		private List<CSE> offeringList;
 
 	public Term(String name) {
 		this.name = name;
@@ -30,3 +32,4 @@ public class Term {
 	
 	
 }
+

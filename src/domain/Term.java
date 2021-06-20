@@ -1,22 +1,44 @@
 package domain;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class Term {
 	private String name;
 	private Date startDate;
+	private List<CSE> offeringList;
 
-	public Term(String name) {
-		this.name = name;
-		this.startDate = null;
+	public static class Builder {
+		private String name;
+		private Date startDate;
+		private List<CSE> offeringList;
+
+		public Builder(String name) {
+			this.name = name;
+		}
+
+		public Builder withStartDate(Date startDate) {
+			this.startDate = startDate;
+
+			return this;
+		}
+		
+		public Builder withOfferingList(List<CSE> offeringList) {
+			this.offeringList = offeringList;
+
+			return this;
+		}
+
+		public Term build(){
+			Term term = new Term();
+			term.name = this.name;
+			term.offeringList = this.offeringList;
+			term.startDate = this.startDate;
+			return term;
+		}
 	}
 
-	public Term(String name, Date startDate) {
-		this.name = name;
-		this.startDate = startDate;
+	private Term() {
 	}
 	
 	public String getName() {
@@ -30,6 +52,5 @@ public class Term {
 	public Date getStartDate() {
 		return startDate;
 	}
-	
-	
 }
+

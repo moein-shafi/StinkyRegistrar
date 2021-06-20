@@ -1,10 +1,11 @@
-package domain;
+package test.domain;
 
 import static org.junit.Assert.*;
 
+import domain.*;
+import domain.exceptions.EnrollmentRulesViolationException;
 import java.util.*;
 
-import domain.exceptions.EnrollmentRulesViolationException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -83,21 +84,21 @@ public class EnrollCtrlTest {
 
 	@Test(expected = EnrollmentRulesViolationException.class)
 	public void cannotTakeWithoutPrePassed() throws EnrollmentRulesViolationException {
-		bebe.addTranscriptRecord(phys1, Term.Builder("t1").build(), 18);
-		bebe.addTranscriptRecord(prog,  Term.Builder("t1").build(), 12);
-		bebe.addTranscriptRecord(math1, Term.Builder("t1").build(), 8.4);
+		bebe.addTranscriptRecord(phys1, new Term.Builder("t1").build(), 18);
+		bebe.addTranscriptRecord(prog,  new Term.Builder("t1").build(), 12);
+		bebe.addTranscriptRecord(math1, new Term.Builder("t1").build(), 8.4);
 		new EnrollmentControl().enroll(bebe, requestedOfferings(math2, ap));
 	}
 
 	@Test
 	public void canTakeWithPreFinallyPassed() throws EnrollmentRulesViolationException {
-		bebe.addTranscriptRecord(phys1, Term.Builder("t1").build(), 18);
-		bebe.addTranscriptRecord(prog, Term.Builder("t1").build(), 12);
-		bebe.addTranscriptRecord(math1, Term.Builder("t1").build(), 8.4);
+		bebe.addTranscriptRecord(phys1, new Term.Builder("t1").build(), 18);
+		bebe.addTranscriptRecord(prog, new Term.Builder("t1").build(), 12);
+		bebe.addTranscriptRecord(math1, new Term.Builder("t1").build(), 8.4);
 
-		bebe.addTranscriptRecord(phys2, Term.Builder("t2").build(), 10);
-		bebe.addTranscriptRecord(ap, Term.Builder("t2").build(), 16);
-		bebe.addTranscriptRecord(math1, Term.Builder("t2").build(), 10.5);
+		bebe.addTranscriptRecord(phys2, new Term.Builder("t2").build(), 10);
+		bebe.addTranscriptRecord(ap, new Term.Builder("t2").build(), 16);
+		bebe.addTranscriptRecord(math1, new Term.Builder("t2").build(), 10.5);
 
 		new EnrollmentControl().enroll(bebe, requestedOfferings(math2, dm));
 		assertTrue(hasTaken(bebe, math2, dm));
@@ -105,26 +106,26 @@ public class EnrollCtrlTest {
 
 	@Test(expected = EnrollmentRulesViolationException.class)
 	public void cannotTakeAlreadyPassed1() throws EnrollmentRulesViolationException {
-		bebe.addTranscriptRecord(phys1, Term.Builder("t1").build(), 18);
-		bebe.addTranscriptRecord(prog, Term.Builder("t1").build(), 12);
-		bebe.addTranscriptRecord(math1, Term.Builder("t1").build(), 8.4);
+		bebe.addTranscriptRecord(phys1,  new Term.Builder("t1").build(), 18);
+		bebe.addTranscriptRecord(prog, new Term.Builder("t1").build(), 12);
+		bebe.addTranscriptRecord(math1, new Term.Builder("t1").build(), 8.4);
 
-		bebe.addTranscriptRecord(phys2, Term.Builder("t2").build(), 10);
-		bebe.addTranscriptRecord(ap, Term.Builder("t2").build(), 16);
-		bebe.addTranscriptRecord(math1, Term.Builder("t2").build(), 10.5);
+		bebe.addTranscriptRecord(phys2, new Term.Builder("t2").build(), 10);
+		bebe.addTranscriptRecord(ap, new Term.Builder("t2").build(), 16);
+		bebe.addTranscriptRecord(math1, new Term.Builder("t2").build(), 10.5);
 
 		new EnrollmentControl().enroll(bebe, requestedOfferings(math1, dm));
 	}
 
 	@Test(expected = EnrollmentRulesViolationException.class)
 	public void cannotTakeAlreadyPassed2() throws EnrollmentRulesViolationException {
-		bebe.addTranscriptRecord(phys1, Term.Builder("t1").build(), 18);
-		bebe.addTranscriptRecord(prog, Term.Builder("t1").build(), 12);
-		bebe.addTranscriptRecord(math1, Term.Builder("t1").build(), 8.4);
+		bebe.addTranscriptRecord(phys1, new Term.Builder("t1").build(), 18);
+		bebe.addTranscriptRecord(prog, new Term.Builder("t1").build(), 12);
+		bebe.addTranscriptRecord(math1, new Term.Builder("t1").build(), 8.4);
 
-		bebe.addTranscriptRecord(phys2, Term.Builder("t2").build(), 10);
-		bebe.addTranscriptRecord(ap, Term.Builder("t2").build(), 16);
-		bebe.addTranscriptRecord(math1, Term.Builder("t2").build(), 10.5);
+		bebe.addTranscriptRecord(phys2, new Term.Builder("t2").build(), 10);
+		bebe.addTranscriptRecord(ap, new Term.Builder("t2").build(), 16);
+		bebe.addTranscriptRecord(math1, new Term.Builder("t2").build(), 10.5);
 
 		new EnrollmentControl().enroll(bebe, requestedOfferings(phys1, dm));
 	}
@@ -147,9 +148,9 @@ public class EnrollCtrlTest {
 
 	@Test
 	public void canTake14WithGPA11() throws EnrollmentRulesViolationException {
-		bebe.addTranscriptRecord(phys1, Term.Builder("t1").build(), 13);
-		bebe.addTranscriptRecord(prog, Term.Builder("t1").build(), 11);
-		bebe.addTranscriptRecord(math1, Term.Builder("t1").build(), 9);
+		bebe.addTranscriptRecord(phys1, new Term.Builder("t1").build(), 13);
+		bebe.addTranscriptRecord(prog, new Term.Builder("t1").build(), 11);
+		bebe.addTranscriptRecord(math1, new Term.Builder("t1").build(), 9);
 
 		new EnrollmentControl().enroll(bebe, requestedOfferings(dm, math1, farsi, akhlagh, english, maaref));
 		assertTrue(hasTaken(bebe, dm, math1, farsi, akhlagh, english, maaref));
@@ -157,9 +158,9 @@ public class EnrollCtrlTest {
 
 	@Test(expected = EnrollmentRulesViolationException.class)
 	public void cannotTake15WithGPA11() throws EnrollmentRulesViolationException {
-		bebe.addTranscriptRecord(phys1, Term.Builder("t1").build(), 13);
-		bebe.addTranscriptRecord(prog, Term.Builder("t1").build(), 11);
-		bebe.addTranscriptRecord(math1, Term.Builder("t1").build(), 9);
+		bebe.addTranscriptRecord(phys1, new Term.Builder("t1").build(), 13);
+		bebe.addTranscriptRecord(prog, new Term.Builder("t1").build(), 11);
+		bebe.addTranscriptRecord(math1, new Term.Builder("t1").build(), 9);
 
 		new EnrollmentControl().enroll(bebe, requestedOfferings(dm, math1, farsi, akhlagh, english, ap));
 		assertTrue(hasTaken(bebe, dm, math1, farsi, akhlagh, english, ap));
@@ -167,9 +168,9 @@ public class EnrollCtrlTest {
 
 	@Test
 	public void canTake15WithGPA12() throws EnrollmentRulesViolationException {
-		bebe.addTranscriptRecord(phys1, Term.Builder("t1").build(), 15);
-		bebe.addTranscriptRecord(prog, Term.Builder("t1").build(), 12);
-		bebe.addTranscriptRecord(math1, Term.Builder("t1").build(), 9);
+		bebe.addTranscriptRecord(phys1, new Term.Builder("t1").build(), 15);
+		bebe.addTranscriptRecord(prog, new Term.Builder("t1").build(), 12);
+		bebe.addTranscriptRecord(math1, new Term.Builder("t1").build(), 9);
 
 		new EnrollmentControl().enroll(bebe, requestedOfferings(dm, math1, farsi, akhlagh, english, maaref));
 		assertTrue(hasTaken(bebe, dm, math1, farsi, akhlagh, english, maaref));
@@ -177,9 +178,9 @@ public class EnrollCtrlTest {
 
 	@Test
 	public void canTake15WithGPA15() throws EnrollmentRulesViolationException {
-		bebe.addTranscriptRecord(phys1, Term.Builder("t1").build(), 15);
-		bebe.addTranscriptRecord(prog, Term.Builder("t1").build(), 15);
-		bebe.addTranscriptRecord(math1, Term.Builder("t1").build(), 15);
+		bebe.addTranscriptRecord(phys1, new Term.Builder("t1").build(), 15);
+		bebe.addTranscriptRecord(prog, new Term.Builder("t1").build(), 15);
+		bebe.addTranscriptRecord(math1, new Term.Builder("t1").build(), 15);
 
 		new EnrollmentControl().enroll(bebe, requestedOfferings(dm, math2, farsi, akhlagh, english, maaref));
 		assertTrue(hasTaken(bebe, dm, math2, farsi, akhlagh, english, maaref));
@@ -187,9 +188,9 @@ public class EnrollCtrlTest {
 
 	@Test(expected = EnrollmentRulesViolationException.class)
 	public void cannotTake18WithGPA15() throws EnrollmentRulesViolationException {
-		bebe.addTranscriptRecord(phys1, Term.Builder("t1").build(), 15);
-		bebe.addTranscriptRecord(prog, Term.Builder("t1").build(), 15);
-		bebe.addTranscriptRecord(math1, Term.Builder("t1").build(), 15);
+		bebe.addTranscriptRecord(phys1, new Term.Builder("t1").build(), 15);
+		bebe.addTranscriptRecord(prog, new Term.Builder("t1").build(), 15);
+		bebe.addTranscriptRecord(math1, new Term.Builder("t1").build(), 15);
 
 		new EnrollmentControl().enroll(bebe, requestedOfferings(ap, dm, math2, farsi, akhlagh, english, ap));
 		assertTrue(hasTaken(bebe, ap, dm, math2, farsi, akhlagh, english, ap));
@@ -197,9 +198,9 @@ public class EnrollCtrlTest {
 
 	@Test
 	public void canTake20WithGPA16() throws EnrollmentRulesViolationException {
-		bebe.addTranscriptRecord(phys1, Term.Builder("t1").build(), 16);
-		bebe.addTranscriptRecord(prog, Term.Builder("t1").build(), 16);
-		bebe.addTranscriptRecord(math1, Term.Builder("t1").build(), 16);
+		bebe.addTranscriptRecord(phys1, new Term.Builder("t1").build(), 16);
+		bebe.addTranscriptRecord(prog, new Term.Builder("t1").build(), 16);
+		bebe.addTranscriptRecord(math1, new Term.Builder("t1").build(), 16);
 
 		new EnrollmentControl().enroll(bebe, requestedOfferings(
 				ap, dm, math2, phys2, economy, karafarini, farsi));
@@ -208,9 +209,9 @@ public class EnrollCtrlTest {
 
 	@Test(expected = EnrollmentRulesViolationException.class)
 	public void cannotTake24() throws EnrollmentRulesViolationException {
-		bebe.addTranscriptRecord(phys1, Term.Builder("t1").build(), 16);
-		bebe.addTranscriptRecord(prog, Term.Builder("t1").build(), 16);
-		bebe.addTranscriptRecord(math1, Term.Builder("t1").build(), 16);
+		bebe.addTranscriptRecord(phys1, new Term.Builder("t1").build(), 16);
+		bebe.addTranscriptRecord(prog, new Term.Builder("t1").build(), 16);
+		bebe.addTranscriptRecord(math1, new Term.Builder("t1").build(), 16);
 
 		new EnrollmentControl().enroll(bebe, requestedOfferings(
 				ap, dm, math2, phys2, economy, karafarini, farsi, akhlagh, english));

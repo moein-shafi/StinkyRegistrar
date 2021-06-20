@@ -10,55 +10,53 @@ import org.junit.Test;
 
 public class EnrollCtrlTest {
 	private Student bebe;
-	private Course prog;
-	private Course ap;
-	private Course dm;
-	private Course math1;
-	private Course math2;
-	private Course phys1;
-	private Course phys2;
-	private Course maaref;
-	private Course farsi;
-	private Course english;
-	private Course akhlagh;
-	private Course economy;
-	private Course karafarini;
+	private Offering prog;
+	private Offering ap;
+	private Offering dm;
+	private Offering math1;
+	private Offering math2;
+	private Offering phys1;
+	private Offering phys2;
+	private Offering maaref;
+	private Offering farsi;
+	private Offering english;
+	private Offering akhlagh;
+	private Offering economy;
+	private Offering karafarini;
 
 	@Before
 	public void setup() {
-		math1 = new Course("4", "MATH1", 3);
-		phys1 = new Course("8", "PHYS1", 3);
-		prog = new Course("7", "PROG", 4);
-		math2 = new Course("6", "MATH2", 3).withPre(math1);
-		phys2 = new Course("9", "PHYS2", 3).withPre(math1, phys1);
-		ap = new Course("2", "AP", 3).withPre(prog);
-		dm = new Course("3", "DM", 3).withPre(prog);
-		economy = new Course("1", "ECO", 3);
-		maaref = new Course("5", "MAAREF", 2);
-		farsi = new Course("12", "FA", 2);
-		english = new Course("10", "EN", 2);
-		akhlagh = new Course("11", "AKHLAGH", 2);
-		karafarini = new Course("13", "KAR", 3);
+		math1 = new Offering("4", "MATH1", 3);
+		phys1 = new Offering("8", "PHYS1", 3);
+		prog = new Offering("7", "PROG", 4);
+		math2 = (Offering) new Offering("6", "MATH2", 3).withPre(math1);
+		phys2 = (Offering) new Offering("9", "PHYS2", 3).withPre(math1, phys1);
+		ap = (Offering) new Offering("2", "AP", 3).withPre(prog);
+		dm = (Offering) new Offering("3", "DM", 3).withPre(prog);
+		economy = new Offering("1", "ECO", 3);
+		maaref = new Offering("5", "MAAREF", 2);
+		farsi = new Offering("12", "FA", 2);
+		english = new Offering("10", "EN", 2);
+		akhlagh = new Offering("11", "AKHLAGH", 2);
+		karafarini = new Offering("13", "KAR", 3);
 
 		bebe = new Student("1", "Bebe");
 	}
 
-	private ArrayList<CSE> requestedOfferings(Course...courses) {
+	private ArrayList<Offering> requestedOfferings(Offering...offerings) {
 		Calendar cal = Calendar.getInstance();
-		ArrayList<CSE> result = new ArrayList<>();
-		for (Course course : courses) {
+		ArrayList<Offering> result = new ArrayList<>();
+		for (Offering offering : offerings) {
 			cal.add(Calendar.DATE, 1);
-			result.add(new CSE(course, cal.getTime()));
+			offering.setExamDate(cal.getTime());
+			result.add(offering);
 		}
 		return result;
 	}
 
 	private boolean hasTaken(Student s, Course...courses) {
-	    Set<Course> coursesTaken = new HashSet<>();
-		for (Student.CourseSection cs : s.getCurrentTerm())
-				coursesTaken.add(cs.course);
 		for (Course course : courses) {
-			if (!coursesTaken.contains(course))
+			if (!s.hasTaken(course.getId()))
 				return false;
 		}
 		return true;
@@ -132,12 +130,10 @@ public class EnrollCtrlTest {
 	@Test(expected = EnrollmentRulesViolationException.class)
 	public void cannotTakeOfferingsWithSameExamTime() throws EnrollmentRulesViolationException {
 		Calendar cal = Calendar.getInstance();
-		new EnrollmentControl().enroll(bebe,
-				List.of(
-					new CSE(phys1, cal.getTime()),
-					new CSE(math1, cal.getTime()),
-					new CSE(phys1, cal.getTime())
-				));
+		List<Offering> offerings = requestedOfferings(phys1, math1, phys1);
+		for (Offering offering : offerings)
+			offering.setExamDate(cal.getTime());
+		new EnrollmentControl().enroll(bebe, offerings);
 	}
 
 	@Test(expected = EnrollmentRulesViolationException.class)
@@ -216,6 +212,4 @@ public class EnrollCtrlTest {
 				ap, dm, math2, phys2, economy, karafarini, farsi, akhlagh, english));
 		assertTrue(hasTaken(bebe, ap, dm, math2, phys2, economy, karafarini, farsi, akhlagh, english));
 	}
-
-
 }

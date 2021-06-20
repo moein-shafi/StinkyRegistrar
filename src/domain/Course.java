@@ -16,10 +16,6 @@ public class Course {
 		this.units = units;
 		prerequisites = new ArrayList<Course>();
 	}
-	
-	public void addPre(Course c) {
-		getPrerequisites().add(c);
-	}
 
 	public Course withPre(Course... pres) {
 		prerequisites.addAll(Arrays.asList(pres));

@@ -18,7 +18,7 @@ public class EnrollmentControl {
         checkForConflictingExamTimes(offerings);
         checkForGPALimit(student, offerings);
         for (Offering offering : offerings)
-            student.takeCourse(offering.getCourse(), offering.getSection());
+            student.takeOffering(offering);
     }
 
     private void checkForPrerequisiteRequirements(Student student, List<Offering> offerings)

@@ -8,13 +8,13 @@ public class Student {
 	private String id;
 	private String name;
 
-	private Map<Term, Map<Course, Double>> transcript;
+	private List<Term> terms;
 	private List<Offering> currentTerm;
 
 	public Student(String id, String name) {
 		this.id = id;
 		this.name = name;
-		this.transcript = new HashMap<>();
+		this.terms = new ArrayList<>();
 		this.currentTerm = new ArrayList<>();
 	}
 	
@@ -22,15 +22,15 @@ public class Student {
 		currentTerm.add(offering);
 	}
 
-	public Map<Term, Map<Course, Double>> getTranscript() {
-		return transcript;
+	public List<Term> getTerms() {
+		return terms;
 	}
 
-	public void addTranscriptRecord(Course course, Term term, double grade) {
-	    if (!transcript.containsKey(term))
-	        transcript.put(term, new HashMap<>());
-	    transcript.get(term).put(course, grade);
-    }
+	public void addTranscriptRecord(Offering offering, Term term, double grade) {
+		if(!terms.contains(term))
+			terms.add(term);
+		term.addOffering(offering, grade);
+	}
 
     public List<Offering> getCurrentTerm() {
         return currentTerm;
@@ -48,13 +48,11 @@ public class Student {
 		return name;
 	}
 
-	public boolean hasPassed(Course course)
+	public boolean hasPassed(String courseId)
 	{
-		for (Map<Course, Double> courses : transcript.values()) {
-			if (courses.containsKey(course)) {
-				if (courses.get(course) >= 10)
-					return true;
-			}
+		for (Term term : terms) {
+			if(term.hasPassed(courseId))
+				return true;
 		}
 		return false;
 	}
@@ -71,12 +69,13 @@ public class Student {
 	public double getGpa() {
 		double points = 0;
 		int totalUnits = 0;
-		for (Map.Entry<Term, Map<Course, Double>> tr : transcript.entrySet()) {
-			for (Map.Entry<Course, Double> r : tr.getValue().entrySet()) {
-				points += r.getValue() * r.getKey().getUnits();
-				totalUnits += r.getKey().getUnits();
+		for (Term term : terms) {
+			for (Offering offering : term.getOfferings().keySet()) {
+				points += term.getOfferings().get(offering) * offering.getCourse().getUnits();
+				totalUnits += offering.getCourse().getUnits();
 			}
 		}
 		return points / totalUnits;
 	}
+}
 }

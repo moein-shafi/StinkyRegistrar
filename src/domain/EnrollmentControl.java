@@ -26,7 +26,7 @@ public class EnrollmentControl {
         for (Offering offering : offerings) {
             List<Course> prerequisites = offering.getCourse().getPrerequisites();
             for (Course prerequisite : prerequisites) {
-                if (!student.hasPassed(prerequisite))
+                if (!student.hasPassed(prerequisite.getId()))
                     throw new EnrollmentRulesViolationException(
                             String.format("The student has not passed %s as a prerequisite of %s",
                                     prerequisite.getName(),offering.getCourse().getName()));
@@ -74,7 +74,7 @@ public class EnrollmentControl {
     private void checkForAlreadyPassedCourses(Student student, List<Offering> offerings)
             throws EnrollmentRulesViolationException {
         for (Offering offering : offerings) {
-            if (student.hasPassed(offering.getCourse()))
+            if (student.hasPassed(offering.getCourse().getId()))
                 throw new EnrollmentRulesViolationException(
                         String.format("The student has already passed %s", offering.getCourse().getName()));
         }

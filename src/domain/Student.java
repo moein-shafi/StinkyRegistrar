@@ -60,7 +60,7 @@ public class Student {
 	public boolean hasTaken(String courseId)
 	{
 		for (Offering offering : currentTerm) {
-			if(offering.getCourse().getId().equals(courseId))
+			if(offering.getId().equals(courseId))
 				return true;
 		}
 		return false;
@@ -71,8 +71,8 @@ public class Student {
 		int totalUnits = 0;
 		for (Term term : terms) {
 			for (Offering offering : term.getOfferings().keySet()) {
-				points += term.getOfferings().get(offering) * offering.getCourse().getUnits();
-				totalUnits += offering.getCourse().getUnits();
+				points += term.getOfferings().get(offering) * offering.getUnits();
+				totalUnits += offering.getUnits();
 			}
 		}
 		return points / totalUnits;

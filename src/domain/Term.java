@@ -42,7 +42,7 @@ public class Term {
 	public boolean hasPassed(String courseId)
 	{
 		for (Offering offering : offerings.keySet()) {
-			if (offering.getCourse().getId().equals(courseId)) {
+			if (offering.getId().equals(courseId)) {
 				if (offerings.get(offering) >= 10)
 					return true;
 			}

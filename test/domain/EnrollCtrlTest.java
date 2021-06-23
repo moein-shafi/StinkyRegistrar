@@ -43,12 +43,13 @@ public class EnrollCtrlTest {
 		bebe = new Student("1", "Bebe");
 	}
 
-	private ArrayList<Offering> requestedOfferings(Course...courses) {
+	private ArrayList<Offering> requestedOfferings(Offering...offerings) {
 		Calendar cal = Calendar.getInstance();
 		ArrayList<Offering> result = new ArrayList<>();
-		for (Course course : courses) {
+		for (Offering offering : offerings) {
 			cal.add(Calendar.DATE, 1);
-			result.add(new Offering(course, cal.getTime()));
+			offering.setExamDate(cal.getTime());
+			result.add(offering);
 		}
 		return result;
 	}

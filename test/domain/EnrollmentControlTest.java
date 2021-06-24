@@ -26,19 +26,19 @@ public class EnrollmentControlTest {
 
 	@Before
 	public void setup() {
-		mathematics1 = new Offering("4", "MATH1", 3);
-		physics1 = new Offering("8", "PHYS1", 3);
-		programming = new Offering("7", "PROG", 4);
-		mathematics2 = (Offering) new Offering("6", "MATH2", 3).withPrerequisites(mathematics1);
-		physics2 = (Offering) new Offering("9", "PHYS2", 3).withPrerequisites(mathematics1, physics1);
+		mathematics1 = new Offering("4", "MATHEMATICS1", 3);
+		physics1 = new Offering("8", "PHYSICS1", 3);
+		programming = new Offering("7", "PROGRAMMING", 4);
+		mathematics2 = (Offering) new Offering("6", "MATHEMATICS2", 3).withPrerequisites(mathematics1);
+		physics2 = (Offering) new Offering("9", "PHYSICS2", 3).withPrerequisites(mathematics1, physics1);
 		advancedProgramming = (Offering) new Offering("2", "AP", 3).withPrerequisites(programming);
 		discreteMathematics = (Offering) new Offering("3", "DM", 3).withPrerequisites(programming);
-		engineeringEconomics = new Offering("1", "ECO", 3);
-		islamicStudies = new Offering("5", "MAAREF", 2);
-		persianLiterature = new Offering("12", "FA", 2);
-		english = new Offering("10", "EN", 2);
-		islamicEthics = new Offering("11", "AKHLAGH", 2);
-		entrepreneurship = new Offering("13", "KAR", 3);
+		engineeringEconomics = new Offering("1", "ENGINEERINGECONOMICS", 3);
+		islamicStudies = new Offering("5", "ISLAMICSTUDIES", 2);
+		persianLiterature = new Offering("12", "PERSIANLITERATURE", 2);
+		english = new Offering("10", "ENGLISH", 2);
+		islamicEthics = new Offering("11", "ISLAMICETHICS", 2);
+		entrepreneurship = new Offering("13", "ENTREPRENEURSHIP", 3);
 
 		student = new Student("1", "Bebe");
 	}

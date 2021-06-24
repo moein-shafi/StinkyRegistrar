@@ -1,8 +1,6 @@
 package domain;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Student {
 	private String id;
@@ -22,26 +20,10 @@ public class Student {
 		currentTerm.add(offering);
 	}
 
-	public List<Term> getTerms() {
-		return terms;
-	}
-
 	public void addTranscriptRecord(Offering offering, Term term, double grade) {
 		if(!terms.contains(term))
 			terms.add(term);
 		term.addOffering(offering, grade);
-	}
-
-    public List<Offering> getCurrentTerm() {
-        return currentTerm;
-    }
-
-    public String getId() {
-		return id;
-	}
-
-	public String getName() {
-		return name;
 	}
 	
 	public String toString() {

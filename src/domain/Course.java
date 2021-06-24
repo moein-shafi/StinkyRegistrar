@@ -14,7 +14,7 @@ public class Course {
 		this.id = id;
 		this.name = name;
 		this.units = units;
-		prerequisites = new ArrayList<Course>();
+		prerequisites = new ArrayList<>();
 	}
 
 	public Course withPrerequisites(Course... courses) {

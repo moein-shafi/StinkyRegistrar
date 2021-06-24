@@ -9,38 +9,38 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class EnrollCtrlTest {
-	private Student bebe;
-	private Offering prog;
-	private Offering ap;
-	private Offering dm;
-	private Offering math1;
-	private Offering math2;
-	private Offering phys1;
-	private Offering phys2;
-	private Offering maaref;
-	private Offering farsi;
+	private Student student;
+	private Offering programming;
+	private Offering advancedProgramming;
+	private Offering discreteMathematics;
+	private Offering mathematics1;
+	private Offering mathematics2;
+	private Offering physics1;
+	private Offering physics2;
+	private Offering islamicStudies;
+	private Offering persianLiterature;
 	private Offering english;
-	private Offering akhlagh;
-	private Offering economy;
-	private Offering karafarini;
+	private Offering islamicEthics;
+	private Offering engineeringEconomics;
+	private Offering entrepreneurship;
 
 	@Before
 	public void setup() {
-		math1 = new Offering("4", "MATH1", 3);
-		phys1 = new Offering("8", "PHYS1", 3);
-		prog = new Offering("7", "PROG", 4);
-		math2 = (Offering) new Offering("6", "MATH2", 3).withPrerequisites(math1);
-		phys2 = (Offering) new Offering("9", "PHYS2", 3).withPrerequisites(math1, phys1);
-		ap = (Offering) new Offering("2", "AP", 3).withPrerequisites(prog);
-		dm = (Offering) new Offering("3", "DM", 3).withPrerequisites(prog);
-		economy = new Offering("1", "ECO", 3);
-		maaref = new Offering("5", "MAAREF", 2);
-		farsi = new Offering("12", "FA", 2);
+		mathematics1 = new Offering("4", "MATH1", 3);
+		physics1 = new Offering("8", "PHYS1", 3);
+		programming = new Offering("7", "PROG", 4);
+		mathematics2 = (Offering) new Offering("6", "MATH2", 3).withPrerequisites(mathematics1);
+		physics2 = (Offering) new Offering("9", "PHYS2", 3).withPrerequisites(mathematics1, physics1);
+		advancedProgramming = (Offering) new Offering("2", "AP", 3).withPrerequisites(programming);
+		discreteMathematics = (Offering) new Offering("3", "DM", 3).withPrerequisites(programming);
+		engineeringEconomics = new Offering("1", "ECO", 3);
+		islamicStudies = new Offering("5", "MAAREF", 2);
+		persianLiterature = new Offering("12", "FA", 2);
 		english = new Offering("10", "EN", 2);
-		akhlagh = new Offering("11", "AKHLAGH", 2);
-		karafarini = new Offering("13", "KAR", 3);
+		islamicEthics = new Offering("11", "AKHLAGH", 2);
+		entrepreneurship = new Offering("13", "KAR", 3);
 
-		bebe = new Student("1", "Bebe");
+		student = new Student("1", "Bebe");
 	}
 
 	private ArrayList<Offering> requestedOfferings(Offering...offerings) {
@@ -65,154 +65,152 @@ public class EnrollCtrlTest {
 
 	@Test
 	public void canTakeBasicCoursesInFirstTerm() throws EnrollmentRulesViolationException {
-		new EnrollmentControl().enroll(bebe, requestedOfferings(math1, phys1, prog));
-		assertTrue(hasTaken(bebe, math1, phys1, prog));
+		new EnrollmentControl().enroll(student, requestedOfferings(mathematics1, physics1, programming));
+		assertTrue(hasTaken(student, mathematics1, physics1, programming));
 	}
 
 	@Test
 	public void canTakeNoOfferings() throws EnrollmentRulesViolationException {
-		new EnrollmentControl().enroll(bebe, new ArrayList<>());
-		assertTrue(hasTaken(bebe));
+		new EnrollmentControl().enroll(student, new ArrayList<>());
+		assertTrue(hasTaken(student));
 	}
 
 	@Test(expected = EnrollmentRulesViolationException.class)
 	public void cannotTakeWithoutPreTaken() throws EnrollmentRulesViolationException {
-		new EnrollmentControl().enroll(bebe, requestedOfferings(math2, phys1, prog));
+		new EnrollmentControl().enroll(student, requestedOfferings(mathematics2, physics1, programming));
 	}
 
 	@Test(expected = EnrollmentRulesViolationException.class)
 	public void cannotTakeWithoutPrePassed() throws EnrollmentRulesViolationException {
-		bebe.addTranscriptRecord(phys1, new Term("t1"), 18);
-		bebe.addTranscriptRecord(prog, new Term("t1"), 12);
-		bebe.addTranscriptRecord(math1, new Term("t1"), 8.4);
-		new EnrollmentControl().enroll(bebe, requestedOfferings(math2, ap));
+		student.addTranscriptRecord(physics1, new Term("t1"), 18);
+		student.addTranscriptRecord(programming, new Term("t1"), 12);
+		student.addTranscriptRecord(mathematics1, new Term("t1"), 8.4);
+		new EnrollmentControl().enroll(student, requestedOfferings(mathematics2, advancedProgramming));
 	}
 
 	@Test
 	public void canTakeWithPreFinallyPassed() throws EnrollmentRulesViolationException {
-		bebe.addTranscriptRecord(phys1, new Term("t1"), 18);
-		bebe.addTranscriptRecord(prog, new Term("t1"), 12);
-		bebe.addTranscriptRecord(math1, new Term("t1"), 8.4);
+		student.addTranscriptRecord(physics1, new Term("t1"), 18);
+		student.addTranscriptRecord(programming, new Term("t1"), 12);
+		student.addTranscriptRecord(mathematics1, new Term("t1"), 8.4);
 
-		bebe.addTranscriptRecord(phys2, new Term("t2"), 10);
-		bebe.addTranscriptRecord(ap, new Term("t2"), 16);
-		bebe.addTranscriptRecord(math1, new Term("t2"), 10.5);
+		student.addTranscriptRecord(physics2, new Term("t2"), 10);
+		student.addTranscriptRecord(advancedProgramming, new Term("t2"), 16);
+		student.addTranscriptRecord(mathematics1, new Term("t2"), 10.5);
 
-		new EnrollmentControl().enroll(bebe, requestedOfferings(math2, dm));
-		assertTrue(hasTaken(bebe, math2, dm));
+		new EnrollmentControl().enroll(student, requestedOfferings(mathematics2, discreteMathematics));
+		assertTrue(hasTaken(student, mathematics2, discreteMathematics));
 	}
 
 	@Test(expected = EnrollmentRulesViolationException.class)
 	public void cannotTakeAlreadyPassed1() throws EnrollmentRulesViolationException {
-		bebe.addTranscriptRecord(phys1, new Term("t1"), 18);
-		bebe.addTranscriptRecord(prog, new Term("t1"), 12);
-		bebe.addTranscriptRecord(math1, new Term("t1"), 8.4);
+		student.addTranscriptRecord(physics1, new Term("t1"), 18);
+		student.addTranscriptRecord(programming, new Term("t1"), 12);
+		student.addTranscriptRecord(mathematics1, new Term("t1"), 8.4);
 
-		bebe.addTranscriptRecord(phys2, new Term("t2"), 10);
-		bebe.addTranscriptRecord(ap, new Term("t2"), 16);
-		bebe.addTranscriptRecord(math1, new Term("t2"), 10.5);
+		student.addTranscriptRecord(physics2, new Term("t2"), 10);
+		student.addTranscriptRecord(advancedProgramming, new Term("t2"), 16);
+		student.addTranscriptRecord(mathematics1, new Term("t2"), 10.5);
 
-		new EnrollmentControl().enroll(bebe, requestedOfferings(math1, dm));
+		new EnrollmentControl().enroll(student, requestedOfferings(mathematics1, discreteMathematics));
 	}
 
 	@Test(expected = EnrollmentRulesViolationException.class)
 	public void cannotTakeAlreadyPassed2() throws EnrollmentRulesViolationException {
-		bebe.addTranscriptRecord(phys1, new Term("t1"), 18);
-		bebe.addTranscriptRecord(prog, new Term("t1"), 12);
-		bebe.addTranscriptRecord(math1, new Term("t1"), 8.4);
+		student.addTranscriptRecord(physics1, new Term("t1"), 18);
+		student.addTranscriptRecord(programming, new Term("t1"), 12);
+		student.addTranscriptRecord(mathematics1, new Term("t1"), 8.4);
 
-		bebe.addTranscriptRecord(phys2, new Term("t2"), 10);
-		bebe.addTranscriptRecord(ap, new Term("t2"), 16);
-		bebe.addTranscriptRecord(math1, new Term("t2"), 10.5);
+		student.addTranscriptRecord(physics2, new Term("t2"), 10);
+		student.addTranscriptRecord(advancedProgramming, new Term("t2"), 16);
+		student.addTranscriptRecord(mathematics1, new Term("t2"), 10.5);
 
-		new EnrollmentControl().enroll(bebe, requestedOfferings(phys1, dm));
+		new EnrollmentControl().enroll(student, requestedOfferings(physics1, discreteMathematics));
 	}
 
 	@Test(expected = EnrollmentRulesViolationException.class)
 	public void cannotTakeOfferingsWithSameExamTime() throws EnrollmentRulesViolationException {
 		Calendar cal = Calendar.getInstance();
-		List<Offering> offerings = requestedOfferings(phys1, math1, phys1);
+		List<Offering> offerings = requestedOfferings(physics1, mathematics1, physics1);
 		for (Offering offering : offerings)
 			offering.setExamDate(cal.getTime());
-		new EnrollmentControl().enroll(bebe, offerings);
+		new EnrollmentControl().enroll(student, offerings);
 	}
 
 	@Test(expected = EnrollmentRulesViolationException.class)
 	public void cannotTakeACourseTwice() throws EnrollmentRulesViolationException {
-		new EnrollmentControl().enroll(bebe, requestedOfferings(phys1, dm, phys1));
+		new EnrollmentControl().enroll(student, requestedOfferings(physics1, discreteMathematics, physics1));
 	}
 
 	@Test
 	public void canTake14WithGPA11() throws EnrollmentRulesViolationException {
-		bebe.addTranscriptRecord(phys1, new Term("t1"), 13);
-		bebe.addTranscriptRecord(prog, new Term("t1"), 11);
-		bebe.addTranscriptRecord(math1, new Term("t1"), 9);
+		student.addTranscriptRecord(physics1, new Term("t1"), 13);
+		student.addTranscriptRecord(programming, new Term("t1"), 11);
+		student.addTranscriptRecord(mathematics1, new Term("t1"), 9);
 
-		new EnrollmentControl().enroll(bebe, requestedOfferings(dm, math1, farsi, akhlagh, english, maaref));
-		assertTrue(hasTaken(bebe, dm, math1, farsi, akhlagh, english, maaref));
+		new EnrollmentControl().enroll(student, requestedOfferings(discreteMathematics, mathematics1, persianLiterature, islamicEthics, english, islamicStudies));
+		assertTrue(hasTaken(student, discreteMathematics, mathematics1, persianLiterature, islamicEthics, english, islamicStudies));
 	}
 
 	@Test(expected = EnrollmentRulesViolationException.class)
 	public void cannotTake15WithGPA11() throws EnrollmentRulesViolationException {
-		bebe.addTranscriptRecord(phys1, new Term("t1"), 13);
-		bebe.addTranscriptRecord(prog, new Term("t1"), 11);
-		bebe.addTranscriptRecord(math1, new Term("t1"), 9);
+		student.addTranscriptRecord(physics1, new Term("t1"), 13);
+		student.addTranscriptRecord(programming, new Term("t1"), 11);
+		student.addTranscriptRecord(mathematics1, new Term("t1"), 9);
 
-		new EnrollmentControl().enroll(bebe, requestedOfferings(dm, math1, farsi, akhlagh, english, ap));
-		assertTrue(hasTaken(bebe, dm, math1, farsi, akhlagh, english, ap));
+		new EnrollmentControl().enroll(student, requestedOfferings(discreteMathematics, mathematics1, persianLiterature, islamicEthics, english, advancedProgramming));
+		assertTrue(hasTaken(student, discreteMathematics, mathematics1, persianLiterature, islamicEthics, english, advancedProgramming));
 	}
 
 	@Test
 	public void canTake15WithGPA12() throws EnrollmentRulesViolationException {
-		bebe.addTranscriptRecord(phys1, new Term("t1"), 15);
-		bebe.addTranscriptRecord(prog, new Term("t1"), 12);
-		bebe.addTranscriptRecord(math1, new Term("t1"), 9);
+		student.addTranscriptRecord(physics1, new Term("t1"), 15);
+		student.addTranscriptRecord(programming, new Term("t1"), 12);
+		student.addTranscriptRecord(mathematics1, new Term("t1"), 9);
 
-		new EnrollmentControl().enroll(bebe, requestedOfferings(dm, math1, farsi, akhlagh, english, maaref));
-		assertTrue(hasTaken(bebe, dm, math1, farsi, akhlagh, english, maaref));
+		new EnrollmentControl().enroll(student, requestedOfferings(discreteMathematics, mathematics1, persianLiterature, islamicEthics, english, islamicStudies));
+		assertTrue(hasTaken(student, discreteMathematics, mathematics1, persianLiterature, islamicEthics, english, islamicStudies));
 	}
 
 	@Test
 	public void canTake15WithGPA15() throws EnrollmentRulesViolationException {
-		bebe.addTranscriptRecord(phys1, new Term("t1"), 15);
-		bebe.addTranscriptRecord(prog, new Term("t1"), 15);
-		bebe.addTranscriptRecord(math1, new Term("t1"), 15);
+		student.addTranscriptRecord(physics1, new Term("t1"), 15);
+		student.addTranscriptRecord(programming, new Term("t1"), 15);
+		student.addTranscriptRecord(mathematics1, new Term("t1"), 15);
 
-		new EnrollmentControl().enroll(bebe, requestedOfferings(dm, math2, farsi, akhlagh, english, maaref));
-		assertTrue(hasTaken(bebe, dm, math2, farsi, akhlagh, english, maaref));
+		new EnrollmentControl().enroll(student, requestedOfferings(discreteMathematics, mathematics2, persianLiterature, islamicEthics, english, islamicStudies));
+		assertTrue(hasTaken(student, discreteMathematics, mathematics2, persianLiterature, islamicEthics, english, islamicStudies));
 	}
 
 	@Test(expected = EnrollmentRulesViolationException.class)
 	public void cannotTake18WithGPA15() throws EnrollmentRulesViolationException {
-		bebe.addTranscriptRecord(phys1, new Term("t1"), 15);
-		bebe.addTranscriptRecord(prog, new Term("t1"), 15);
-		bebe.addTranscriptRecord(math1, new Term("t1"), 15);
+		student.addTranscriptRecord(physics1, new Term("t1"), 15);
+		student.addTranscriptRecord(programming, new Term("t1"), 15);
+		student.addTranscriptRecord(mathematics1, new Term("t1"), 15);
 
-		new EnrollmentControl().enroll(bebe, requestedOfferings(ap, dm, math2, farsi, akhlagh, english, ap));
-		assertTrue(hasTaken(bebe, ap, dm, math2, farsi, akhlagh, english, ap));
+		new EnrollmentControl().enroll(student, requestedOfferings(advancedProgramming, discreteMathematics, mathematics2, persianLiterature, islamicEthics, english, advancedProgramming));
+		assertTrue(hasTaken(student, advancedProgramming, discreteMathematics, mathematics2, persianLiterature, islamicEthics, english, advancedProgramming));
 	}
 
 	@Test
 	public void canTake20WithGPA16() throws EnrollmentRulesViolationException {
-		bebe.addTranscriptRecord(phys1, new Term("t1"), 16);
-		bebe.addTranscriptRecord(prog, new Term("t1"), 16);
-		bebe.addTranscriptRecord(math1, new Term("t1"), 16);
+		student.addTranscriptRecord(physics1, new Term("t1"), 16);
+		student.addTranscriptRecord(programming, new Term("t1"), 16);
+		student.addTranscriptRecord(mathematics1, new Term("t1"), 16);
 
-		new EnrollmentControl().enroll(bebe, requestedOfferings(
-				ap, dm, math2, phys2, economy, karafarini, farsi));
-		assertTrue(hasTaken(bebe, ap, dm, math2, phys2, economy, karafarini, farsi));
+		new EnrollmentControl().enroll(student, requestedOfferings(
+				advancedProgramming, discreteMathematics, mathematics2, physics2, engineeringEconomics, entrepreneurship, persianLiterature));
+		assertTrue(hasTaken(student, advancedProgramming, discreteMathematics, mathematics2, physics2, engineeringEconomics, entrepreneurship, persianLiterature));
 	}
 
 	@Test(expected = EnrollmentRulesViolationException.class)
 	public void cannotTake24() throws EnrollmentRulesViolationException {
-		bebe.addTranscriptRecord(phys1, new Term("t1"), 16);
-		bebe.addTranscriptRecord(prog, new Term("t1"), 16);
-		bebe.addTranscriptRecord(math1, new Term("t1"), 16);
+		student.addTranscriptRecord(physics1, new Term("t1"), 16);
+		student.addTranscriptRecord(programming, new Term("t1"), 16);
+		student.addTranscriptRecord(mathematics1, new Term("t1"), 16);
 
-		new EnrollmentControl().enroll(bebe, requestedOfferings(
-				ap, dm, math2, phys2, economy, karafarini, farsi, akhlagh, english));
-		assertTrue(hasTaken(bebe, ap, dm, math2, phys2, economy, karafarini, farsi, akhlagh, english));
+		new EnrollmentControl().enroll(student, requestedOfferings(
+				advancedProgramming, discreteMathematics, mathematics2, physics2, engineeringEconomics, entrepreneurship, persianLiterature, islamicEthics, english));
+		assertTrue(hasTaken(student, advancedProgramming, discreteMathematics, mathematics2, physics2, engineeringEconomics, entrepreneurship, persianLiterature, islamicEthics, english));
 	}
-
-
 }

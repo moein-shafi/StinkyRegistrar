@@ -35,7 +35,7 @@ public class EnrollmentControl {
     }
 
     private void checkForGPALimit(Student student, List<Offering> offerings) throws EnrollmentRulesViolationException {
-        int unitsRequested = offerings.stream().mapToInt(offering -> offering.getUnits()).sum();
+        int unitsRequested = offerings.stream().mapToInt(Course::getUnits).sum();
         if ((student.getGpa() < MAXIMUM_GPA_OF_PROBATION_STUDENTS &&
                         unitsRequested > MAXIMUM_ALLOWED_UNITS_FOR_PROBATION_STUDENTS) ||
                 (student.getGpa() < MAXIMUM_GPA_OF_ORDINARY_STUDENTS &&

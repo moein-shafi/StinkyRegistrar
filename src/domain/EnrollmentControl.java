@@ -46,7 +46,7 @@ public class EnrollmentControl {
                             unitsRequested, student.getGpa()));
     }
 
-    private void checkForDuplicateEnrollRequest(List<Offering> offerings) throws EnrollmentRulesViolationException {
+    private void checkForConflictingExamTimes(List<Offering> offerings) throws EnrollmentRulesViolationException {
         for (Offering firstOffering : offerings) {
             for (Offering secondOffering : offerings) {
                 if (firstOffering == secondOffering)
@@ -59,7 +59,7 @@ public class EnrollmentControl {
         }
     }
 
-    private void checkForConflictingExamTimes(List<Offering> offerings) throws EnrollmentRulesViolationException {
+    private void checkForDuplicateEnrollRequest(List<Offering> offerings) throws EnrollmentRulesViolationException {
         for (Offering firstOffering : offerings) {
             for (Offering secondOffering : offerings) {
                 if (firstOffering == secondOffering)

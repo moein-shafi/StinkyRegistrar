@@ -29,10 +29,10 @@ public class EnrollCtrlTest {
 		math1 = new Offering("4", "MATH1", 3);
 		phys1 = new Offering("8", "PHYS1", 3);
 		prog = new Offering("7", "PROG", 4);
-		math2 = (Offering) new Offering("6", "MATH2", 3).withPre(math1);
-		phys2 = (Offering) new Offering("9", "PHYS2", 3).withPre(math1, phys1);
-		ap = (Offering) new Offering("2", "AP", 3).withPre(prog);
-		dm = (Offering) new Offering("3", "DM", 3).withPre(prog);
+		math2 = (Offering) new Offering("6", "MATH2", 3).withPrerequisites(math1);
+		phys2 = (Offering) new Offering("9", "PHYS2", 3).withPrerequisites(math1, phys1);
+		ap = (Offering) new Offering("2", "AP", 3).withPrerequisites(prog);
+		dm = (Offering) new Offering("3", "DM", 3).withPrerequisites(prog);
 		economy = new Offering("1", "ECO", 3);
 		maaref = new Offering("5", "MAAREF", 2);
 		farsi = new Offering("12", "FA", 2);

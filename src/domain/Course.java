@@ -17,11 +17,11 @@ public class Course {
 		prerequisites = new ArrayList<Course>();
 	}
 	
-	public void addPrerequisites(Course c) {
+	public void addPre(Course c) {
 		getPrerequisites().add(c);
 	}
 
-	public Course withPre(Course... pres) {
+	public Course withPrerequisites(Course... pres) {
 		prerequisites.addAll(Arrays.asList(pres));
 		return this;
 	}

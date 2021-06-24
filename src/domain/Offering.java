@@ -24,8 +24,6 @@ public class Offering extends Course{
 	}
 
 	public boolean hasExamTimeConflict(Date date) {
-		if (examDate.equals(date))
-			return true;
-		return false;
+		return examDate.equals(date);
 	}
 }

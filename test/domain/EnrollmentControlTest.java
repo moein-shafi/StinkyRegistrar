@@ -148,8 +148,10 @@ public class EnrollmentControlTest {
 		student.addTranscriptRecord(programming, new Term("t1"), 11);
 		student.addTranscriptRecord(mathematics1, new Term("t1"), 9);
 
-		new EnrollmentControl().enroll(student, requestedOfferings(discreteMathematics, mathematics1, persianLiterature, islamicEthics, english, islamicStudies));
-		assertTrue(hasTaken(student, discreteMathematics, mathematics1, persianLiterature, islamicEthics, english, islamicStudies));
+		new EnrollmentControl().enroll(student, requestedOfferings(discreteMathematics, mathematics1, persianLiterature,
+				islamicEthics, english, islamicStudies));
+		assertTrue(hasTaken(student, discreteMathematics, mathematics1, persianLiterature, islamicEthics, english,
+				islamicStudies));
 	}
 
 	@Test(expected = EnrollmentRulesViolationException.class)
@@ -158,8 +160,10 @@ public class EnrollmentControlTest {
 		student.addTranscriptRecord(programming, new Term("t1"), 11);
 		student.addTranscriptRecord(mathematics1, new Term("t1"), 9);
 
-		new EnrollmentControl().enroll(student, requestedOfferings(discreteMathematics, mathematics1, persianLiterature, islamicEthics, english, advancedProgramming));
-		assertTrue(hasTaken(student, discreteMathematics, mathematics1, persianLiterature, islamicEthics, english, advancedProgramming));
+		new EnrollmentControl().enroll(student, requestedOfferings(discreteMathematics, mathematics1, persianLiterature,
+				islamicEthics, english, advancedProgramming));
+		assertTrue(hasTaken(student, discreteMathematics, mathematics1, persianLiterature, islamicEthics, english,
+				advancedProgramming));
 	}
 
 	@Test
@@ -168,8 +172,10 @@ public class EnrollmentControlTest {
 		student.addTranscriptRecord(programming, new Term("t1"), 12);
 		student.addTranscriptRecord(mathematics1, new Term("t1"), 9);
 
-		new EnrollmentControl().enroll(student, requestedOfferings(discreteMathematics, mathematics1, persianLiterature, islamicEthics, english, islamicStudies));
-		assertTrue(hasTaken(student, discreteMathematics, mathematics1, persianLiterature, islamicEthics, english, islamicStudies));
+		new EnrollmentControl().enroll(student, requestedOfferings(discreteMathematics, mathematics1, persianLiterature,
+				islamicEthics, english, islamicStudies));
+		assertTrue(hasTaken(student, discreteMathematics, mathematics1, persianLiterature, islamicEthics, english,
+				islamicStudies));
 	}
 
 	@Test
@@ -178,8 +184,10 @@ public class EnrollmentControlTest {
 		student.addTranscriptRecord(programming, new Term("t1"), 15);
 		student.addTranscriptRecord(mathematics1, new Term("t1"), 15);
 
-		new EnrollmentControl().enroll(student, requestedOfferings(discreteMathematics, mathematics2, persianLiterature, islamicEthics, english, islamicStudies));
-		assertTrue(hasTaken(student, discreteMathematics, mathematics2, persianLiterature, islamicEthics, english, islamicStudies));
+		new EnrollmentControl().enroll(student, requestedOfferings(discreteMathematics, mathematics2, persianLiterature,
+				islamicEthics, english, islamicStudies));
+		assertTrue(hasTaken(student, discreteMathematics, mathematics2, persianLiterature, islamicEthics, english,
+				islamicStudies));
 	}
 
 	@Test(expected = EnrollmentRulesViolationException.class)
@@ -188,8 +196,10 @@ public class EnrollmentControlTest {
 		student.addTranscriptRecord(programming, new Term("t1"), 15);
 		student.addTranscriptRecord(mathematics1, new Term("t1"), 15);
 
-		new EnrollmentControl().enroll(student, requestedOfferings(advancedProgramming, discreteMathematics, mathematics2, persianLiterature, islamicEthics, english, advancedProgramming));
-		assertTrue(hasTaken(student, advancedProgramming, discreteMathematics, mathematics2, persianLiterature, islamicEthics, english, advancedProgramming));
+		new EnrollmentControl().enroll(student, requestedOfferings(advancedProgramming, discreteMathematics,
+				mathematics2, persianLiterature, islamicEthics, english, advancedProgramming));
+		assertTrue(hasTaken(student, advancedProgramming, discreteMathematics, mathematics2, persianLiterature,
+				islamicEthics, english, advancedProgramming));
 	}
 
 	@Test
@@ -199,8 +209,10 @@ public class EnrollmentControlTest {
 		student.addTranscriptRecord(mathematics1, new Term("t1"), 16);
 
 		new EnrollmentControl().enroll(student, requestedOfferings(
-				advancedProgramming, discreteMathematics, mathematics2, physics2, engineeringEconomics, entrepreneurship, persianLiterature));
-		assertTrue(hasTaken(student, advancedProgramming, discreteMathematics, mathematics2, physics2, engineeringEconomics, entrepreneurship, persianLiterature));
+				advancedProgramming, discreteMathematics, mathematics2, physics2, engineeringEconomics,
+				entrepreneurship, persianLiterature));
+		assertTrue(hasTaken(student, advancedProgramming, discreteMathematics, mathematics2, physics2,
+				engineeringEconomics, entrepreneurship, persianLiterature));
 	}
 
 	@Test(expected = EnrollmentRulesViolationException.class)
@@ -210,7 +222,9 @@ public class EnrollmentControlTest {
 		student.addTranscriptRecord(mathematics1, new Term("t1"), 16);
 
 		new EnrollmentControl().enroll(student, requestedOfferings(
-				advancedProgramming, discreteMathematics, mathematics2, physics2, engineeringEconomics, entrepreneurship, persianLiterature, islamicEthics, english));
-		assertTrue(hasTaken(student, advancedProgramming, discreteMathematics, mathematics2, physics2, engineeringEconomics, entrepreneurship, persianLiterature, islamicEthics, english));
+				advancedProgramming, discreteMathematics, mathematics2, physics2, engineeringEconomics,
+				entrepreneurship, persianLiterature, islamicEthics, english));
+		assertTrue(hasTaken(student, advancedProgramming, discreteMathematics, mathematics2, physics2,
+				engineeringEconomics, entrepreneurship, persianLiterature, islamicEthics, english));
 	}
 }

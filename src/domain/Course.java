@@ -17,7 +17,7 @@ public class Course {
 		prerequisites = new ArrayList<Course>();
 	}
 	
-	public void addPre(Course c) {
+	public void addPrerequisites(Course c) {
 		getPrerequisites().add(c);
 	}
 

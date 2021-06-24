@@ -8,7 +8,7 @@ import domain.exceptions.EnrollmentRulesViolationException;
 import org.junit.Before;
 import org.junit.Test;
 
-public class EnrollCtrlTest {
+public class EnrollmentControlTest {
 	private Student student;
 	private Offering programming;
 	private Offering advancedProgramming;

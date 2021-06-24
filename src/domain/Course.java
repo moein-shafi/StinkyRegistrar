@@ -21,8 +21,8 @@ public class Course {
 		getPrerequisites().add(c);
 	}
 
-	public Course withPrerequisites(Course... pres) {
-		prerequisites.addAll(Arrays.asList(pres));
+	public Course withPrerequisites(Course... courses) {
+		prerequisites.addAll(Arrays.asList(courses));
 		return this;
 	}
 
@@ -31,15 +31,15 @@ public class Course {
 	}
 
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(name);
-		sb.append(" {");
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(name);
+		stringBuilder.append(" {");
 		for (Course pre : getPrerequisites()) {
-			sb.append(pre.getName());
-			sb.append(", ");
+			stringBuilder.append(pre.getName());
+			stringBuilder.append(", ");
 		}
-		sb.append("}");
-		return sb.toString();
+		stringBuilder.append("}");
+		return stringBuilder.toString();
 	}
 
 	public String getName() {
@@ -54,8 +54,8 @@ public class Course {
 		return id;
 	}
 
-	public boolean equals(Object obj) {
-		Course other = (Course)obj;
+	public boolean equals(Object object) {
+		Course other = (Course)object;
 		return id.equals(other.id);
 	}
 }

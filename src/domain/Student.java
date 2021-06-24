@@ -78,4 +78,3 @@ public class Student {
 		return points / totalUnits;
 	}
 }
-}

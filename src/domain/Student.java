@@ -30,8 +30,7 @@ public class Student {
 		return name;
 	}
 
-	public boolean hasPassed(String courseId)
-	{
+	public boolean hasPassed(String courseId) {
 		for (Term term : terms) {
 			if(term.hasPassed(courseId))
 				return true;
@@ -39,8 +38,7 @@ public class Student {
 		return false;
 	}
 
-	public boolean hasTaken(String courseId)
-	{
+	public boolean hasTaken(String courseId) {
 		for (Offering offering : currentTerm) {
 			if(offering.getId().equals(courseId))
 				return true;

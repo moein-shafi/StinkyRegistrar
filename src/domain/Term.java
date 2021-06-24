@@ -26,8 +26,7 @@ public class Term {
 			offerings.put(offering, grade);
 	}
 
-	public boolean hasPassed(String courseId)
-	{
+	public boolean hasPassed(String courseId) {
 		for (Offering offering : offerings.keySet()) {
 			if (offering.getId().equals(courseId)) {
 				if (offerings.get(offering) >= 10)
@@ -36,6 +35,4 @@ public class Term {
 		}
 		return false;
 	}
-	
-	
 }

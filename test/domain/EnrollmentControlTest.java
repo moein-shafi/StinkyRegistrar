@@ -55,7 +55,6 @@ public class EnrollmentControlTest {
 	}
 
 	private boolean hasTaken(Student s, Course...courses) {
-	    Set<Course> coursesTaken = new HashSet<>();
 		for (Course course : courses) {
 			if (!s.hasTaken(course.getId()))
 				return false;

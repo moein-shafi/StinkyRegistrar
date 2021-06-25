@@ -50,6 +50,6 @@ public class Student {
 		if (terms.isEmpty()) {
 			return 0;
 		}
-		return terms.stream().mapToDouble(i -> i.getGPA()).average().orElseThrow();
+		return terms.stream().mapToDouble(Term::getGPA).average().orElseThrow();
 	}
 }

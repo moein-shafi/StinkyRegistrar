@@ -1,6 +1,6 @@
 package domain.checkers;
 
-import domain.exceptions.EnrollmentRulesViolationException;
+import domain.violations.CheckerViolation;
 import domain.Offering;
 import domain.Course;
 import domain.Student;
@@ -22,15 +22,16 @@ public class GPALimit extends BaseChecker{
         this.offerings = offerings;
     }
 
-    public void doCheck() throws EnrollmentRulesViolationException {
+    public CheckerViolation doCheck() {
         int unitsRequested = offerings.stream().mapToInt(Course::getUnits).sum();
         if ((student.getGpa() < MAXIMUM_GPA_OF_PROBATION_STUDENTS &&
                         unitsRequested > MAXIMUM_ALLOWED_UNITS_FOR_PROBATION_STUDENTS) ||
                 (student.getGpa() < MAXIMUM_GPA_OF_ORDINARY_STUDENTS &&
                         unitsRequested > MAXIMUM_ALLOWED_UNITS_FOR_ORDINARY_STUDENTS) ||
                 (unitsRequested > MAXIMUM_ALLOWED_UNITS))
-            throw new EnrollmentRulesViolationException(
-                    String.format("Number of units (%d) requested does not match GPA of %f",
-                            unitsRequested, student.getGpa()));
+            return new CheckerViolation(
+                String.format("Number of units (%d) requested does not match GPA of %f",
+                unitsRequested, student.getGpa()));
+        return null;
     }
 }

@@ -6,7 +6,7 @@ import domain.Student;
 
 import java.util.List;
 
-public class AlreadyPassedCourses {
+public class AlreadyPassedCourses extends BaseChecker{
     Student student;
     List<Offering> offerings;
 

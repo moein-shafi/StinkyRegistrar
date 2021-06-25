@@ -7,7 +7,7 @@ import domain.Student;
 
 import java.util.List;
 
-public class GPALimit {
+public class GPALimit extends BaseChecker{
     private static final int MAXIMUM_ALLOWED_UNITS_FOR_PROBATION_STUDENTS = 14;
     private static final int MAXIMUM_GPA_OF_PROBATION_STUDENTS = 12;
     private static final int MAXIMUM_ALLOWED_UNITS_FOR_ORDINARY_STUDENTS = 16;

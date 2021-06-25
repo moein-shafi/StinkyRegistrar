@@ -5,7 +5,7 @@ import domain.Offering;
 
 import java.util.List;
 
-public class DuplicateEnrollRequest {
+public class DuplicateEnrollRequest extends BaseChecker{
     List<Offering> offerings;
 
     public DuplicateEnrollRequest(List<Offering> offerings){

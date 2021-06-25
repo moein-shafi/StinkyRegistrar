@@ -5,7 +5,7 @@ import domain.Offering;
 
 import java.util.List;
 
-public class ConflictingExamTimes {
+public class ConflictingExamTimes extends BaseChecker{
     List<Offering> offerings;
 
     public ConflictingExamTimes(List<Offering> offerings){

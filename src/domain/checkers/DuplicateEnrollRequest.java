@@ -1,3 +1,6 @@
+package domain.checkers;
+
+
 public class DuplicateEnrollRequest {
     List<Offering> offerings;
 

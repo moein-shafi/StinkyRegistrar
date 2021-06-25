@@ -1,3 +1,5 @@
+package domain.checkers;
+
 public class ConflictingExamTimes {
     List<Offering> offerings;
 

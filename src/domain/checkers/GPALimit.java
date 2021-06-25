@@ -1,3 +1,6 @@
+package domain.checkers;
+
+
 public class GPALimit {
     Student student;
     List<Offering> offerings;

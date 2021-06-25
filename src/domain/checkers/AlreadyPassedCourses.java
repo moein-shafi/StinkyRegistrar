@@ -1,8 +1,8 @@
 package domain.checkers;
 
-import domain.exceptions.EnrollmentRulesViolationException;
 import domain.Offering;
 import domain.Student;
+import domain.violations.CheckerViolation;
 
 import java.util.List;
 
@@ -15,11 +15,12 @@ public class AlreadyPassedCourses extends BaseChecker{
         this.offerings = offerings;
     }
 
-    public void doCheck() throws EnrollmentRulesViolationException {
+    public CheckerViolation doCheck() {
         for (Offering offering : offerings) {
             if (student.hasPassed(offering.getId()))
-                throw new EnrollmentRulesViolationException(
-                        String.format("The student has already passed %s", offering.getName()));
+                return new CheckerViolation(
+                    String.format("The student has already passed %s", offering.getName()));
         }
+        return null;
     }
 }

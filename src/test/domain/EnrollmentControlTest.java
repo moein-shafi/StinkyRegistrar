@@ -1,4 +1,4 @@
-package domain;
+package test.domain;
 
 import static org.junit.Assert.*;
 
@@ -7,6 +7,8 @@ import java.util.*;
 import domain.exceptions.EnrollmentRulesViolationException;
 import org.junit.Before;
 import org.junit.Test;
+import domain.*;
+
 
 public class EnrollmentControlTest {
 	private Student student;

@@ -47,14 +47,9 @@ public class Student {
 	}
 
 	public double getGpa() {
-		double points = 0;
-		int totalUnits = 0;
-		for (Term term : terms) {
-			for (Offering offering : term.getOfferings().keySet()) {
-				points += term.getOfferings().get(offering) * offering.getUnits();
-				totalUnits += offering.getUnits();
-			}
+		if (terms.isEmpty()) {
+			return 0;
 		}
-		return points / totalUnits;
+		return terms.stream().mapToDouble(i -> i.getGPA()).average().orElseThrow();
 	}
 }

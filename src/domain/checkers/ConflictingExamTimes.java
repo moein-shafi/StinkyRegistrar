@@ -1,6 +1,6 @@
 package domain.checkers;
 
-import domain.exceptions.EnrollmentRulesViolationException;
+import domain.violations.CheckerViolation;
 import domain.Offering;
 
 import java.util.List;
@@ -12,16 +12,17 @@ public class ConflictingExamTimes extends BaseChecker{
         this.offerings = offerings;
     }
 
-    public void doCheck() throws EnrollmentRulesViolationException {
+    public CheckerViolation doCheck() {
         for (Offering firstOffering : offerings) {
             for (Offering secondOffering : offerings) {
                 if (firstOffering == secondOffering)
                     continue;
                 if (firstOffering.hasExamTimeConflict(secondOffering.getExamTime()))
-                    throw new EnrollmentRulesViolationException(
-                            String.format("Two offerings %s and %s have the same exam time",
-                                    firstOffering, secondOffering));
+                    return new CheckerViolation(
+                        String.format("Two offerings %s and %s have the same exam time",
+                        firstOffering, secondOffering));
             }
         }
+        return null;
     }
 }

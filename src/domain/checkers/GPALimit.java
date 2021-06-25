@@ -1,7 +1,19 @@
 package domain.checkers;
 
+import domain.exceptions.EnrollmentRulesViolationException;
+import domain.Offering;
+import domain.Course;
+import domain.Student;
+
+import java.util.List;
 
 public class GPALimit {
+    private static final int MAXIMUM_ALLOWED_UNITS_FOR_PROBATION_STUDENTS = 14;
+    private static final int MAXIMUM_GPA_OF_PROBATION_STUDENTS = 12;
+    private static final int MAXIMUM_ALLOWED_UNITS_FOR_ORDINARY_STUDENTS = 16;
+    private static final int MAXIMUM_GPA_OF_ORDINARY_STUDENTS = 16;
+    private static final int MAXIMUM_ALLOWED_UNITS = 20;
+
     Student student;
     List<Offering> offerings;
 

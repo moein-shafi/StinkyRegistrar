@@ -1,5 +1,9 @@
 package domain.checkers;
 
+import domain.exceptions.EnrollmentRulesViolationException;
+import domain.Offering;
+
+import java.util.List;
 
 public class DuplicateEnrollRequest {
     List<Offering> offerings;

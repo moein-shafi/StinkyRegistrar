@@ -1,5 +1,10 @@
 package domain.checkers;
 
+import domain.exceptions.EnrollmentRulesViolationException;
+import domain.Offering;
+
+import java.util.List;
+
 public class ConflictingExamTimes {
     List<Offering> offerings;
 

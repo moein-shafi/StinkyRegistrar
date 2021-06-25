@@ -1,3 +1,11 @@
+package domain.checkers;
+
+import domain.exceptions.EnrollmentRulesViolationException;
+import domain.Offering;
+import domain.Student;
+
+import java.util.List;
+
 public class AlreadyPassedCourses {
     Student student;
     List<Offering> offerings;

@@ -1,8 +1,8 @@
 package domain.checkers;
 
-import domain.exceptions.EnrollmentRulesViolationException;
+import domain.violations.CheckerViolation;
 
 
 public abstract class  BaseChecker {
-    public abstract void doCheck() throws EnrollmentRulesViolationException;
+    public abstract CheckerViolation doCheck() ;
 }

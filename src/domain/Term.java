@@ -35,4 +35,17 @@ public class Term {
 		}
 		return false;
 	}
+
+	public double getGPA() {
+		double points = 0;
+		int totalUnits = 0;
+		for (Map.Entry<Offering, Double> entry : offerings.entrySet()) {
+			points += entry.getValue() * entry.getKey().getUnits();
+			totalUnits += entry.getKey().getUnits();
+		}
+		if (totalUnits == 0) {
+			return 0;
+		}
+		return points / totalUnits;
+	}
 }
